@@ -13,7 +13,7 @@ type Table map[rune]rune
 
 //String convert any unicode souce in a Latin compatible text
 func String(source string) (string, error) {
-	return StringWithTable(source, CyrillicTable, GreekTable)
+	return StringWithTable(source)
 }
 
 type removeMark struct{}

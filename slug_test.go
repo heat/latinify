@@ -1,6 +1,10 @@
 package latinify
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+	"strings"
+)
 
 func TestSlugify(t *testing.T) {
 	type args struct {
@@ -40,6 +44,48 @@ func TestSlugify(t *testing.T) {
 			}
 			if got != tt.want {
 				t.Errorf("Slugify() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func Test_apply(t *testing.T) {
+	type args struct {
+		funcs []stringTransform
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			"Lower case Text",
+			args{
+				[]stringTransform{
+					strings.ToLower,
+				},
+			 }, 
+			 "hello world", 
+		},
+		{
+			"Space removed",
+			args{
+				[]stringTransform{
+					func(src string) string {
+						return strings.ReplaceAll(src, " ", "")
+					},
+				},
+			 }, 
+			 "HelloWorld", 
+		},
+	}
+	for _, tt := range tests {
+		text := "Hello World"
+		t.Run(tt.name, func(t *testing.T) {
+
+			if got := apply(tt.args.funcs...)(text); !reflect.DeepEqual(got, tt.want) {
+				
+				t.Errorf("apply() = %v, want %v", got, tt.want)
 			}
 		})
 	}
