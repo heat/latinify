@@ -34,6 +34,12 @@ func TestSlugify(t *testing.T) {
 			"onezino-gabriel-moreira",
 			false,
 		},
+		{
+			"already_sluged",
+			args{"already_sluged"},
+			"already_sluged",
+			false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

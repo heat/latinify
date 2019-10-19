@@ -26,7 +26,7 @@ func Slugify(source string) (string, error) {
 	}
 
 	spacers := regexp.MustCompile(`\s+`)
-	notAWord := regexp.MustCompile(`[^a-zA-Z0-9\-]+`)
+	notAWord := regexp.MustCompile(`[^a-zA-Z0-9\-_]+`)
 	transformers := apply(
 		strings.ToLower,
 		strings.TrimSpace,
