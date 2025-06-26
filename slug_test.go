@@ -2,8 +2,8 @@ package latinify
 
 import (
 	"reflect"
-	"testing"
 	"strings"
+	"testing"
 )
 
 func TestSlugify(t *testing.T) {
@@ -17,12 +17,6 @@ func TestSlugify(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			"slug a simple name",
-			args{"onezino gabriel Moreira"},
-			"onezino-gabriel-moreira",
-			false,
-		},
-		{
 			"slug a simple com acentos",
 			args{"onezino gá\"b®riel Moreira"},
 			"onezino-gabriel-moreira",
@@ -31,6 +25,12 @@ func TestSlugify(t *testing.T) {
 		{
 			"slug a simple name",
 			args{"onezino gabriel Moreira"},
+			"onezino-gabriel-moreira",
+			false,
+		},
+		{
+			"collapse multiple spaces",
+			args{"onezino   gabriel  Moreira"},
 			"onezino-gabriel-moreira",
 			false,
 		},
@@ -70,8 +70,8 @@ func Test_apply(t *testing.T) {
 				[]stringTransform{
 					strings.ToLower,
 				},
-			 }, 
-			 "hello world", 
+			},
+			"hello world",
 		},
 		{
 			"Space removed",
@@ -81,8 +81,8 @@ func Test_apply(t *testing.T) {
 						return strings.ReplaceAll(src, " ", "")
 					},
 				},
-			 }, 
-			 "HelloWorld", 
+			},
+			"HelloWorld",
 		},
 	}
 	for _, tt := range tests {
@@ -90,7 +90,7 @@ func Test_apply(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 
 			if got := apply(tt.args.funcs...)(text); !reflect.DeepEqual(got, tt.want) {
-				
+
 				t.Errorf("apply() = %v, want %v", got, tt.want)
 			}
 		})

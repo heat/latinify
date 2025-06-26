@@ -5,6 +5,9 @@ import (
 	"strings"
 )
 
+var spacers = regexp.MustCompile(`\s+`)
+var notAWord = regexp.MustCompile(`[^a-zA-Z0-9\-_]+`)
+
 type stringTransform func(string) string
 
 func apply(funcs ...stringTransform) func(string) string {
@@ -25,8 +28,6 @@ func Slugify(source string) (string, error) {
 		return "", err
 	}
 
-	spacers := regexp.MustCompile(`\s+`)
-	notAWord := regexp.MustCompile(`[^a-zA-Z0-9\-_]+`)
 	transformers := apply(
 		strings.ToLower,
 		strings.TrimSpace,

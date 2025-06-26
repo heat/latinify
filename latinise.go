@@ -11,7 +11,7 @@ import (
 //Table unicode mapped table
 type Table map[rune]rune
 
-//String convert any unicode souce in a Latin compatible text
+// String converts any unicode source into a Latin compatible text
 func String(source string) (string, error) {
 	return StringWithTable(source)
 }
